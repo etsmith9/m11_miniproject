@@ -1,0 +1,53 @@
+.character-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+}
+
+.character-card {
+  cursor: pointer;
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+  border-radius: 10px;
+  background: #f8f8f8;
+  transition: transform 0.2s;
+}
+
+.character-card:hover {
+  transform: scale(1.05);
+}
+
+.character-detail {
+  padding: 1rem;
+  border-left: 1px solid #ccc;
+}
+
+nav {
+  background: #333;
+  overflow: hidden;
+}
+
+nav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+nav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.clearfix:after {
+  content: "";
+  clear: both;
+  display: table;
+}
