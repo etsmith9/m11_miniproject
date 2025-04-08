@@ -1,1 +1,0 @@
-exercise_minutes = int(input("how many minutes do you exercise daily?"))
