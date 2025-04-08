@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import notfound from '../assets/notfound.jpg';
 
+// Question 2, Improving NotFound Component w react-bootstrap
+// color scheme, structure content with grid, add image, enhance navigation with navlink
 
 function NotFound() {
     const navigate = useNavigate();
