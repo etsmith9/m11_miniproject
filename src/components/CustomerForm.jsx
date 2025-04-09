@@ -19,7 +19,7 @@ class CustomerForm extends Component {
   }
 
   componentDidMount() {
-    const { id } = this.props.params;
+    const { id } = this.props.params || {};
     console.log(id);
     if (id) {
       this.fetchCustomerData(id);
@@ -48,21 +48,6 @@ class CustomerForm extends Component {
     if (prevProps.customerId !== this.props.customerId) {
       this.setState({ selectedCustomerId: this.props.customerId });
       this.fetchCustomerData(this.props.customerId);
-
-      if (this.props.customerId) {
-        axios.get(`http://127.0.0.1:5000/customers/${this.props.customerId}`)
-            .then(response => {
-                const customerData = response.data;
-                this.setState({
-                name: customerData.name,
-                email: customerData.email,
-                phone: customerData.phone,
-                });
-            })
-            .catch(error => {
-                console.error('Error fetching customer data:', error);
-            });
-      }
     }
   }
 
@@ -76,10 +61,17 @@ class CustomerForm extends Component {
   validateForm = () => {
     const { name, email, phone } = this.state;
     const errors = {};
+  
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
     if (!name.trim()) errors.name = 'Name is required';
-    if (!email.trim()) errors.email = 'Email is required';
+    if (!email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!emailRegex.test(email)) {
+      errors.email = 'Invalid email format';
+    }
     if (!phone.trim()) errors.phone = 'Phone is required';
-
+  
     return errors;
   };
 
@@ -94,7 +86,9 @@ class CustomerForm extends Component {
             phone: this.state.phone.trim()
       };
 
-      const apiUrl = this.state.selectedCustomerId
+      const { selectedCustomerId } = this.state;
+
+      const apiUrl = selectedCustomerId
         ? `http://127.0.0.1:5000/customers/${selectedCustomerId}`
         : `http://127.0.0.1:5000/customers`;
 
@@ -139,8 +133,8 @@ class CustomerForm extends Component {
 
     return (
       <Container>
-          {isLoading && <Alert variable='info'> Submitting customer data...</Alert>}
-          {error && <Alert variable='danger' >Error submitting customer data: {error}</Alert>}
+          {isLoading && <Alert variant='info'> Submitting customer data...</Alert>}
+          {error && <Alert variant='danger' >Error submitting customer data: {error}</Alert>}
 
           <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId='formGroupName'>
